@@ -7,16 +7,16 @@
 def canUnlockAll(boxes):
     """Main method
     """
-    unlockedboxes = set()
+    boxsize = len(boxes)
+    unlockedboxes = {0}
     box = [0]
 
     while box:
         currentbox = box.pop()
-        unlockedboxes.add(currentbox)
 
         for key in boxes[currentbox]:
-
-            if key not in unlockedboxes:
+            if 0 < key < boxsize and key not in unlockedboxes:
+                unlockedboxes.add(currentbox)
                 box.append(key)
 
-    return (len(unlockedboxes) == len(boxes))
+    return (len(unlockedboxes) == boxsize - 1)
