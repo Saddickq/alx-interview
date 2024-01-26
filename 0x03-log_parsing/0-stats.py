@@ -23,7 +23,9 @@ try:
             for key, value in my_dict.items():
                 print(f"{key}: {value}")
 except KeyboardInterrupt:
-    pass
+    print(f"File size: {fileSize}")
+    for key, value in my_dict.items():
+        print(f"{key}: {value}")
 finally:
     print(f"File size: {fileSize}")
     for key, value in my_dict.items():
