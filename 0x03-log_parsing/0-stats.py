@@ -11,10 +11,13 @@ try:
         segments = line.split()
         try:
             fileSize += int(segments[-1])
-            if segments[-2] not in dictionary:
-                dictionary[segments[-2]] = 1
-            else:
-                dictionary[segments[-2]] += 1
+            statuses = [200, 301, 400, 401, 403, 404, 405, 500]
+
+            if int(segments[-2]) in statuses:
+                if segments[-2] not in dictionary:
+                    dictionary[segments[-2]] = 1
+                else:
+                    dictionary[segments[-2]] += 1
         except Exception as err:
             continue
         my_dict = dict(sorted(dictionary.items()))
@@ -23,9 +26,7 @@ try:
             for key, value in my_dict.items():
                 print(f"{key}: {value}")
 except KeyboardInterrupt:
-    print(f"File size: {fileSize}")
-    for key, value in my_dict.items():
-        print(f"{key}: {value}")
+    pass
 finally:
     print(f"File size: {fileSize}")
     for key, value in my_dict.items():
