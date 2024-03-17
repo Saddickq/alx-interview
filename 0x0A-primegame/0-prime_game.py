@@ -2,54 +2,42 @@
 """Maria and Ben are playing a game"""
 
 
-def is_winner(rounds, numbers):
-    """Determines the winner of the game.
-
-    Args:
-        rounds (int): Number of rounds.
-        numbers (list of int): List of numbers.
-
-    Returns:
-        str or None: Name of the winner ("Ben" or "Maria") or None if inputs are invalid.
+def isWinner(x, nums):
+    """x - number of rounds
+    nums - numbers of list
     """
-    if rounds <= 0 or numbers is None or rounds != len(numbers):
+    if x <= 0 or nums is None:
+        return None
+    if x != len(nums):
         return None
 
-    ben_score = 0
-    maria_score = 0
+    ben_var = 0
+    maria_var = 0
 
-    # Sieve of Eratosthenes to generate primes
-    primes = generate_primes(max(numbers))
+    b = [1 for x in range(sorted(nums)[-1] + 1)]
+    b[0], b[1] = 0, 0
+    for i in range(2, len(b)):
+        remove_multiples(b, i)
 
-    for num in numbers:
-        if sum(primes[:num + 1]) % 2 == 0:
-            ben_score += 1
+    for i in nums:
+        if sum(b[0:i + 1]) % 2 == 0:
+            ben_var += 1
         else:
-            maria_score += 1
-
-    if ben_score > maria_score:
+            maria_var += 1
+    if ben_var > maria_var:
         return "Ben"
-    elif maria_score > ben_score:
+    if maria_var > ben_var:
         return "Maria"
-    else:
-        return None
+    return None
 
 
-def generate_primes(limit):
-    """Generates prime numbers using Sieve of Eratosthenes.
 
-    Args:
-        limit (int): Upper limit for generating primes.
-
-    Returns:
-        list of int: List containing 1 at prime indices and 0 at composite indices.
+def remove_multiples(ls, x):
+    """removes multiple of primes
     """
-    primes = [1] * (limit + 1)
-    primes[0], primes[1] = 0, 0
-
-    for i in range(2, len(primes)):
-        for j in range(2 * i, len(primes), i):
-            primes[j] = 0
-
-    return primes
+    for j in range(2, len(ls)):
+        try:
+            ls[j * x] = 0
+        except (ValueError, IndexError):
+            break
 
